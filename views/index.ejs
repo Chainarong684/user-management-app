@@ -1,3 +1,28 @@
-<%- include('include/_header.ejs') %> 
+<%- include('include/_header.ejs') %>
+
+<div class="container">
+  <div class="main-content">
+    <a href="/add-user"
+      ><button class="btn btn-info"><i class="fas fa-user-plus"></i> New User</button></a
+    >
+    <form action="" method="POST">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Gender</td>
+            <td>Status</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <%- include('include/_show.ejs') %>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
 
 <%- include('include/_footer.ejs') %>

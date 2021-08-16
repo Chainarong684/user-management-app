@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Atkinson+Hyperlegible&display=swap");
+
+body {
+  font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
+.nav-custom {
+  font-family: "Anton", sans-serif;
+  background-color: aquamarine;
+  justify-content: center;
+}
+
+.main-content {
+  margin: 50px auto;
+  width: 800px;
+}
