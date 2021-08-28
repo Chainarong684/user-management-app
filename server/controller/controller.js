@@ -35,7 +35,7 @@ exports.create = (req, res) => {
         res.status(500).send({
           status: "bad",
           msg,
-          error: err || "Some thing wrong with create user",
+          error: err.message
         });
       });
   }
@@ -63,35 +63,37 @@ exports.find = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  let id = req.params.id;
+  let update = req.body;
 
-  if (!req.body || !id) {
+  if (!id || !update || (Object.keys(update).length === 0 && update.constructor === Object)) {
     res.status(400).send({
       status: "bad",
       msg: "Data to update can not be empty",
     });
-  }
-
-  Userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
+  } else {
+    Userdb.findByIdAndUpdate(id, update, {new: true})
+      .then((data) => {
+        if (!data) {
+          res.status(404).send({
+            status: "bad",
+            msg: `User not found with id ${id}`,
+          });
+        } else {
+          res.send({
+            status: "good",
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({
           status: "bad",
-          msg: `User not found with id ${id}`,
+          msg: `User not found with id ${id} please try agian`,
+          error: err.message,
         });
-      } else {
-        res.send({
-          status: "good",
-          data,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        status: "bad",
-        msg: "Some thing wrong can not update user",
       });
-    });
+  }
 };
 
 exports.delete = (req, res) => {

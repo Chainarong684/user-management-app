@@ -10,7 +10,7 @@ var schema = new mongoose.Schema({
     require: true,
     unique: true,
   },
-  gener: String,
+  gender: String,
   status: String,
 });
 
