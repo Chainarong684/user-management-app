@@ -22,7 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 app.set("view engine", "ejs");
-// app.set("views", path.resolve(__dirname, "views/ejs"));
 
 app.use("/css", express.static(path.resolve(__dirname, "assets/css")));
 app.use("/img", express.static(path.resolve(__dirname, "assets/img")));

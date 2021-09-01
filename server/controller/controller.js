@@ -1,5 +1,6 @@
-var Userdb = require("../model/model");
+var Userdb = require("../model/userModel");
 
+/* --------------------------------- CREATE --------------------------------- */
 exports.create = (req, res) => {
   let name = req.body.name;
   let email = req.body.email;
@@ -14,7 +15,7 @@ exports.create = (req, res) => {
   } else {
     const user = new Userdb({
       name,
-      email,
+      email: email.toLowerCase(),
       gender,
       status,
     });
@@ -41,6 +42,8 @@ exports.create = (req, res) => {
   }
 };
 
+/* ---------------------------------- FIND ALL ---------------------------------- */
+
 exports.find = (req, res) => {
   Userdb.find()
     .then((data) => {
@@ -61,6 +64,31 @@ exports.find = (req, res) => {
       });
     });
 };
+
+/* ------------------------------- FIND BY ID ------------------------------- */
+
+// if (!id || id.length < 24 || id.length > 24) {
+
+// }
+exports.findById = (req, res) => {
+  const id = req.params.id;
+
+  Userdb.findById(id, (err, data) => {
+    if (!data) {
+      res.status(400).send({
+        status: 'bad',
+        err
+      })
+    } else {
+      res.send({
+        status: 'good',
+        data
+      })
+    }
+  })
+};
+
+/* --------------------------------- UPDATE --------------------------------- */
 
 exports.update = (req, res) => {
   let id = req.params.id;
@@ -96,43 +124,37 @@ exports.update = (req, res) => {
   }
 };
 
+/* ------------------------------- DELETE ------------------------------- */
+
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  // Userdb.findByIdAndDelete(id, (err, result) => {
-  //   if (err) {
-  //     console.log(err.message);
-  //   } else {
-  //     console.log(result);
-  //   }
-  // });
-
-  // if (!id) {
-  //   res.status(400).send({
-  //     status: "bad",
-  //     msg: "Please insert User ID for delete",
-  //   });
-  // } else {
-  //   Userdb.findOneAndDelete(id)
-  //     .then((data) => {
-  //       if (!data) {
-  //         res.status(404).send({
-  //           status: "bad",
-  //           msg: `Cannot delete User ID ${id}. Maybe User not found`,
-  //         });
-  //       } else {
-  //         res.send({
-  //           status: "good",
-  //           msg: `Successfully User ID ${id} was deleted`,
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       res.status(500).send({
-  //         status: "bad",
-  //         msg: `Cannot delete User with ID ${id}`,
-  //         err,
-  //       });
-  //     });
-  // }
+  if (!id || id.length < 24 || id.length > 24) {
+    return res.status(400).send({
+      status: "bad",
+      msg: "Please check User ID",
+    });
+  } else {
+    Userdb.findByIdAndDelete(id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).send({
+            status: "bad",
+            msg: `User with ${id} not found`,
+          });
+        } else {
+          res.send({
+            status: "good",
+            msg: `Successfully User ID ${id} was deleted`,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({
+          status: "bad",
+          msg: `Cannot delete User with ID ${id}`,
+          err,
+        });
+      });
+  }
 };
