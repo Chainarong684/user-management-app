@@ -42,51 +42,75 @@ exports.create = (req, res) => {
   }
 };
 
-/* ---------------------------------- FIND ALL ---------------------------------- */
+/* ---------------------------------- FIND ---------------------------------- */
 
 exports.find = (req, res) => {
-  Userdb.find()
-    .then((data) => {
-      let msg = "";
-      if (data.length == 0) {
-        msg = "User is empty";
-      }
-      res.send({
-        status: "good",
-        msg,
-        data,
+  const id = req.query.id;
+  let msg = "";
+  if (id && id.length == 24) {
+    Userdb.findById(id)
+      .then((data) => {
+        if (!data) {
+          res.status(400).send({
+            status: "bad",
+            err,
+          });
+        } else {
+          msg = `Find by User ID`;
+          res.send({
+            status: "good",
+            msg,
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({
+          status: "bad",
+          err,
+        });
       });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        status: "bad",
-        error: err || "Some thing wrong can not get user",
+  } else {
+    Userdb.find()
+      .then((data) => {
+        msg = "Find all User";
+        if (data.length == 0) {
+          msg = "User is empty";
+        }
+        res.send({
+          status: "good",
+          msg,
+          data,
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          status: "bad",
+          error: err || "Some thing wrong can not get user",
+        });
       });
-    });
+  }
 };
 
 /* ------------------------------- FIND BY ID ------------------------------- */
 
-// if (!id || id.length < 24 || id.length > 24) {
+// exports.findById = (req, res) => {
+//   const id = req.params.id;
 
-// }
-exports.findById = (req, res) => {
-  const id = req.params.id;
-
-  Userdb.findById(id, (err, data) => {
-    if (!data) {
-      res.status(400).send({
-        status: "bad",
-        err,
-      });
-    } else {
-      res.send({
-        status: "good",
-        data,
-      });
-    }
-  });
-};
+//   Userdb.findById(id, (err, data) => {
+//     if (!data) {
+//       res.status(400).send({
+//         status: "bad",
+//         err,
+//       });
+//     } else {
+//       res.send({
+//         status: "good",
+//         data,
+//       });
+//     }
+//   });
+// };
 
 /* --------------------------------- UPDATE --------------------------------- */
 // !name || !email || !gender || !status

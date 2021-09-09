@@ -18,10 +18,10 @@ route.get("/update-user", services.update_user);
 
 /* ------------------------------- CREATE USER ------------------------------ */
 route.post("/api/users", controller.create);
-/* -------------------------------- GET ALL USERS ------------------------------- */
+/* -------------------------------- GET USERS ------------------------------- */
 route.get("/api/users", controller.find);
 /* ----------------------------- GET USER BY ID ----------------------------- */
-route.get("/api/users/:id", controller.findById);
+// route.get("/api/users/:id", controller.findById);
 /* ------------------------------- UPDATE USER ------------------------------ */
 route.put("/api/users/:id", controller.update);
 /* --------------------------------- DELETE USER --------------------------------- */
