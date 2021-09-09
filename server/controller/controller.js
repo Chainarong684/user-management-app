@@ -76,31 +76,36 @@ exports.findById = (req, res) => {
   Userdb.findById(id, (err, data) => {
     if (!data) {
       res.status(400).send({
-        status: 'bad',
-        err
-      })
+        status: "bad",
+        err,
+      });
     } else {
       res.send({
-        status: 'good',
-        data
-      })
+        status: "good",
+        data,
+      });
     }
-  })
+  });
 };
 
 /* --------------------------------- UPDATE --------------------------------- */
-
+// !name || !email || !gender || !status
 exports.update = (req, res) => {
-  let id = req.params.id;
-  let update = req.body;
+  const id = req.params.id;
+  const { name, email, gender, status } = req.body;
 
-  if (!id || !update || (Object.keys(update).length === 0 && update.constructor === Object)) {
+  if (!id || id.length < 24 || id.length > 24) {
     res.status(400).send({
       status: "bad",
-      msg: "Data to update can not be empty",
+      msg: "Please check your User ID",
+    });
+  } else if (!req.body) {
+    res.status(400).send({
+      status: "bad",
+      msg: "Data to update cannot be empty",
     });
   } else {
-    Userdb.findByIdAndUpdate(id, update, { new: true })
+    Userdb.findByIdAndUpdate(id, req.body, { new: true })
       .then((data) => {
         if (!data) {
           res.status(404).send({
@@ -115,9 +120,14 @@ exports.update = (req, res) => {
         }
       })
       .catch((err) => {
+        let msg = "";
+        if (err.code === 11000) {
+          msg = `Error duplicate Email ${err.keyValue.email} is already used`;
+        }
+
         res.status(500).send({
           status: "bad",
-          msg: `Error duplicate Email ${err.keyValue.email} is already used`,
+          msg,
           error: err.message,
         });
       });
