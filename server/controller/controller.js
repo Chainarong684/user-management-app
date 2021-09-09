@@ -51,9 +51,10 @@ exports.find = (req, res) => {
     Userdb.findById(id)
       .then((data) => {
         if (!data) {
+          msg = `Not found User with ID ${id}`;
           res.status(400).send({
             status: "bad",
-            err,
+            msg,
           });
         } else {
           msg = `Find by User ID`;

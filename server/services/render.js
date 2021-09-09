@@ -1,5 +1,19 @@
+const axios = require("axios");
+
 exports.homeRoutes = (req, res) => {
-  res.render("index");
+  axios
+    .get("http://localhost:3000/api/users")
+    .then((result) => {
+      console.log(result.data);
+      res.render("index", {
+        check: "index",
+        users: result.data,
+        type: result.data.msg
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 };
 
 exports.add_user = (req, res) => {
