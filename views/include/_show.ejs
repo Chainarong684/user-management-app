@@ -1,12 +1,12 @@
-<% for (var i = 1; i < users.data.length; i++) { %>
+<% for (var i = 0; i < users.data.length; i++) { %>
 <tr>
-  <td><%= i %></td>
+  <td><%= i + 1 %></td>
   <td><%= users.data[i].name %></td>
   <td><%= users.data[i].email %></td>
   <td><%= users.data[i].gender %></td>
   <td><%= users.data[i].status %></td>
   <td>
-    <a href="/update-user"
+    <a href="/update-user?id=<%= users.data[i]._id%>"
       ><div class="btn btn-primary"><i class="fas fa-edit"></i></div
     ></a>
     <a href="#"

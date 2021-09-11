@@ -5,7 +5,7 @@ exports.homeRoutes = (req, res) => {
     .get("http://localhost:3000/api/users")
     .then((result) => {
       res.render("index", {
-        check: "index",
+        page: "index",
         users: result.data,
         type: result.data.msg,
       });
@@ -16,9 +16,23 @@ exports.homeRoutes = (req, res) => {
 };
 
 exports.add_user = (req, res) => {
-  res.render("add_user");
+  res.render("add_user", {
+    page: "Add User",
+  });
 };
 
 exports.update_user = (req, res) => {
-  res.render("update_user");
+  const id = req.query.id;
+  axios
+    // .get("http://localhost:3000/api/users", { params: { id: req.query.id } })
+    .get(`http://localhost:3000/api/users?id=${id}`)
+    .then((result) => {
+      res.render("update_user", {
+        page: "Update User",
+        userData: result.data,
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 };
