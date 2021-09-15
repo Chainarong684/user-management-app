@@ -2,8 +2,6 @@ var Userdb = require("../model/userModel");
 
 /* --------------------------------- CREATE --------------------------------- */
 exports.create = (req, res) => {
-  console.log(req.body);
-
   let name = req.body.name;
   let email = req.body.email;
   let gender = req.body.gender;
@@ -121,7 +119,7 @@ exports.find = (req, res) => {
 // !name || !email || !gender || !status
 exports.update = (req, res) => {
   const id = req.params.id;
-  const { name, email, gender, status } = req.body;
+  // const { name, email, gender, status } = req.body;
 
   if (!id || id.length < 24 || id.length > 24) {
     res.status(400).send({

@@ -28,7 +28,6 @@ exports.update_user = (req, res) => {
     .get(`http://localhost:3000/api/users?id=${id}`)
     .then((response) => {
       const { data } = response.data;
-      console.log(data.gender);
       res.render("update_user", {
         page: "Update User",
         userData: data,
