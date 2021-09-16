@@ -35,8 +35,9 @@
         axios
           .delete(`http://localhost:3000/api/users/${id}`)
           .then((result) => {
+            console.log(result.data);
             if (result.data.status === "good") {
-              Swal.fire("Deleted!", "User '' has been deleted.", "success").then((test) => {
+              Swal.fire("Deleted!", `${result.data.msg}`, "success").then((test) => {
                 window.location.reload();
               });
             }

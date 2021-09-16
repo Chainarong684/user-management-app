@@ -34,5 +34,14 @@
 </form>
 
 <script>
-  // $('#add_user')
+  $("#add_user").submit(() => {
+    Swal.fire({
+      icon: "success",
+      title: "Your work has been saved",
+      showConfirmButton: false,
+      timer: 1500,
+    }).then((result) => {
+      console.log(result);
+    })
+  });
 </script>
