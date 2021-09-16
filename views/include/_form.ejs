@@ -34,5 +34,10 @@
 </form>
 
 <script>
-  // $('#add_user')
+  $("#add_user").submit(function (event) {
+    event.preventDefault();
+
+    let nonIndexArray = $(this).serializeArray();
+    console.log(nonIndexArray);
+  });
 </script>
