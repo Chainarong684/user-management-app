@@ -34,14 +34,10 @@
 </form>
 
 <script>
-  $("#add_user").submit(() => {
-    Swal.fire({
-      icon: "success",
-      title: "Your work has been saved",
-      showConfirmButton: false,
-      timer: 1500,
-    }).then((result) => {
-      console.log(result);
-    })
+  $("#add_user").submit(function (event) {
+    event.preventDefault();
+
+    let nonIndexArray = $(this).serializeArray();
+    console.log(nonIndexArray);
   });
 </script>
