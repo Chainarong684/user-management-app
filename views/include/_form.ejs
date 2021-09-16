@@ -1,4 +1,4 @@
-<form action="/api/users" method="POST" id="add_user">
+<form action="" method="" id="add_user">
   <div class="form-group">
     <label for="name" class="form-label">Name</label>
     <input type="hidden" id="id" />
@@ -38,6 +38,31 @@
     event.preventDefault();
 
     let nonIndexArray = $(this).serializeArray();
-    console.log(nonIndexArray);
+
+    let indexArray = {}
+    $.map(nonIndexArray, function (n, i) {
+      indexArray[n['name']] = n['value']
+    })
+
+    axios
+      .post(`http://localhost:3000/api/users`, indexArray)
+      .then((result) => {
+        const res = result.data
+        const { data } = res
+        console.log(data);
+        // const userData = data.data
+        if (res.status === 'good') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Created User',
+            text: `Successfuly create user with ID ${data._id}`
+          }).then(() => {
+            window.location = "/"
+          })
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+
   });
 </script>

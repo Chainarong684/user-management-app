@@ -2,6 +2,7 @@ var Userdb = require("../model/userModel");
 
 /* --------------------------------- CREATE --------------------------------- */
 exports.create = (req, res) => {
+
   let name = req.body.name;
   let email = req.body.email;
   let gender = req.body.gender;
@@ -23,12 +24,10 @@ exports.create = (req, res) => {
     user
       .save(user)
       .then((data) => {
-        // res.send({
-        //   status: "good",
-        //   data,
-        // });
-
-        res.redirect("/");
+        res.send({
+          status: "good",
+          data,
+        });
       })
       .catch((err) => {
         let msg = "";

@@ -49,17 +49,17 @@
 
     let nonIndexArray = $(this).serializeArray();
 
-    let IndexArray = {}
+    let indexArray = {}
     $.map(nonIndexArray, function (n, i) {
-      IndexArray[n['name']] = n['value']
+      indexArray[n['name']] = n['value']
     })
 
     const userId = $('#id').val()
     const data = {
-      name: IndexArray.name,
-      email: IndexArray.email,
-      gender: IndexArray.gender,
-      status: IndexArray.status
+      name: indexArray.name,
+      email: indexArray.email,
+      gender: indexArray.gender,
+      status: indexArray.status
     }
 
     axios
@@ -73,7 +73,7 @@
             icon: 'success',
             title: 'Updated User',
             text: `Successfuly to update user with ID ${userData._id}`
-          }).then((test) => {
+          }).then(() => {
             window.location = "/"
           })
         }
