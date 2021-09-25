@@ -94,31 +94,9 @@ exports.find = (req, res) => {
   }
 };
 
-/* ------------------------------- FIND BY ID ------------------------------- */
-
-// exports.findById = (req, res) => {
-//   const id = req.params.id;
-
-//   Userdb.findById(id, (err, data) => {
-//     if (!data) {
-//       res.status(400).send({
-//         status: "bad",
-//         err,
-//       });
-//     } else {
-//       res.send({
-//         status: "good",
-//         data,
-//       });
-//     }
-//   });
-// };
-
 /* --------------------------------- UPDATE --------------------------------- */
-// !name || !email || !gender || !status
 exports.update = (req, res) => {
   const id = req.params.id;
-  // const { name, email, gender, status } = req.body;
 
   if (!id || id.length < 24 || id.length > 24) {
     res.status(400).send({
