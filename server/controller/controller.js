@@ -2,7 +2,6 @@ var Userdb = require("../model/userModel");
 
 /* --------------------------------- CREATE --------------------------------- */
 exports.create = (req, res) => {
-
   let name = req.body.name;
   let email = req.body.email;
   let gender = req.body.gender;
@@ -47,7 +46,9 @@ exports.create = (req, res) => {
 
 exports.find = (req, res) => {
   const id = req.query.id;
+  const name = req.query.name;
   let msg = "";
+
   if (id && id.length == 24) {
     Userdb.findById(id)
       .then((data) => {
@@ -69,6 +70,19 @@ exports.find = (req, res) => {
       .catch((err) => {
         res.status(500).send({
           status: "bad",
+          err,
+        });
+      });
+  } else if (name) {
+    Userdb.findOne({ name: name })
+      .then((result) => {
+        if (result) {
+          res.json(result);
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({
+          staus: "bad",
           err,
         });
       });
